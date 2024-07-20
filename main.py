@@ -26,6 +26,8 @@ if thread_max_input.strip():  # Check if input is not empty after stripping whit
 print(f"THREAD_MAX set to: {THREAD_MAX}")
 
 
+TRUST_CACHE = not input("Trust cache? (Skip re-checking playlists for changes. Default: Y)").strip().lower().startswith("n")
+
 # Constants
 CACHE_PATH = "cache.json"
 FONT_PATH = "/Windows/Fonts/heygorgeous.ttf"
@@ -337,6 +339,65 @@ def check_playlist_order(playlist_url):
     return results
 
 
+
+
+def check_and_update_playlists_cache():
+    global cache_data
+    global TRUST_CACHE
+    
+    if not TRUST_CACHE:
+        print("\nChecking and updating playlists cache...")
+
+        for playlist_url in cache_data.keys():
+            try:
+                current_playlist_links = get_playlist_links(playlist_url)
+                cached_links = cache_data[playlist_url]
+
+                if set(current_playlist_links) != set(cached_links):
+                    print(f"Playlist {playlist_url} has changes. Updating cache...")
+
+                    cache_data[playlist_url] = current_playlist_links
+                    autosave(1)
+            except Exception as e:
+                print(f"Error checking playlist {playlist_url}: {e}")
+
+        print("Playlist cache update complete.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 channel_url = sanitize_channel_url(input("Please enter the YouTube channel URL: "))
 
 # Check if '@' symbol is present in the sanitized channel_url
@@ -380,6 +441,11 @@ for playlist in playlists:
 for thread in threads:
     thread.join()
 dump_cache()
+
+check_and_update_playlists_cache() # if not trusted
+autosave(-1)
+
+
 
 log_dict = {}
 delta = 1
