@@ -2,6 +2,11 @@
 
 Python program to check the order of videos in YouTube series playlists. uses tools yt-dlp and pytube to fetch playlist data & fetch video titles
 
+Vid of it running (slightly dated):
+[![Watch the video](https://img.youtube.com/vi/l_Z6s7eh3QU/maxresdefault.jpg)](https://www.youtube.com/watch?v=l_Z6s7eh3QU)
+
+
+
 ## Features
 
 - **Fetching Playlists**: Retrieves all playlists from a given YouTube channel URL.
