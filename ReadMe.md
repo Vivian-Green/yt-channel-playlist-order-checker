@@ -9,18 +9,13 @@ Python program to check the order of videos in YouTube series playlists. uses to
 - **Multi-threaded Processing**: Utilizes threads to concurrently fetch video titles and check their order within playlists.
 - **Dynamic Progress Updates**: Displays progress bars and ETA for overall progress and individual playlist progress.
 - **Color-coded Output**: Outputs results in color-coded format for easy readability:
-  - Green for correct part numbers.
+  - Green for expected part numbers.
   - Orange for titles containing "finale".
   - Yellow for titles missing expected part numbers.
-  - Red for incorrect part numbers.
+  - Red for potentially incorrect part numbers.
 
 
 - Video links from each playlist are cached for quick access and reduced API calls in future runs.
-- For each playlist, it will check the order of videos based on expected naming conventions (e.g., "Part 1", "Part 2", etc.).
-
-- Results are displayed with color coding to indicate correctness of part numbers and presence of "finale" in titles.
-- Dynamic progress bars and ETA are displayed for both overall progress and individual playlist progress.
-- The program continues to monitor and update results until manually terminated.
 
 ## Setup and Requirements
 

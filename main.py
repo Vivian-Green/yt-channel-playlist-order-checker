@@ -9,6 +9,23 @@ from pytube import YouTube, Playlist
 
 # copy pasted from YoinkYt common.py Jul 19 2024
 
+
+THREAD_MAX = 50
+# Prompt the user for input
+thread_max_input = input(f"Enter max threads (default is {THREAD_MAX}): ")
+
+# Check if the user provided input
+if thread_max_input.strip():  # Check if input is not empty after stripping whitespace
+    try:
+        THREAD_MAX = int(thread_max_input)
+        if THREAD_MAX <= 0:
+            raise ValueError("THREAD_MAX must be a positive integer")
+    except ValueError as e:
+        print(f"Error: {e}. Using default value of {THREAD_MAX}")
+
+print(f"THREAD_MAX set to: {THREAD_MAX}")
+
+
 # Constants
 CACHE_PATH = "cache.json"
 FONT_PATH = "/Windows/Fonts/heygorgeous.ttf"
@@ -164,7 +181,6 @@ def sanitize_title(title):
 
 
 
-THREAD_MAX = 50
 CACHE_FILE = "playlist-validity-cache.json"
 
 
@@ -321,8 +337,16 @@ def check_playlist_order(playlist_url):
     return results
 
 
-# Prompt the user for the channel link
 channel_url = sanitize_channel_url(input("Please enter the YouTube channel URL: "))
+
+# Check if '@' symbol is present in the sanitized channel_url
+if channel_url.find("@") == -1:
+    # If no '@' symbol, check if there's a cached last_channel_url
+    if "last_channel_url" in cache_data:
+        channel_url = cache_data["last_channel_url"]
+else:
+    # If '@' symbol is present, update cache_data with this channel_url
+    cache_data["last_channel_url"] = channel_url
 
 # Fetch the playlists from the channel
 playlists = fetch_channel_playlists(channel_url)
